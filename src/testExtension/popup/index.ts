@@ -1,4 +1,4 @@
-import { CookieCategoryType } from 'common/cookies';
+import { CookieCategoryType } from 'engine/categories';
 import { getAllPreferences, setChromeStorage } from 'common/preferences';
 
 async function populatePreferences(): Promise<void> {
