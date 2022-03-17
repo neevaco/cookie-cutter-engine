@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es2017",
+    "allowJs": false,
+    "noEmit": false,
+    "paths": {
+      "common/*": ["common/*"],
+      "engine/*": ["engine/*"]
+    }
+  },
+  "include": [
+    "src/**/*.ts",  
+    "src/**/*.tsx",
+  ]
+}

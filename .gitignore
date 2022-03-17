@@ -1,0 +1,7 @@
+yarn-error.log
+crx/
+build/
+node_modules/
+
+.vscode/
+.DS_store
