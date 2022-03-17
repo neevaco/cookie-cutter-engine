@@ -1,4 +1,5 @@
 import { CookieCategoryType } from 'engine/categories';
+import { getActivationStatus } from './activationStatus';
 import { getAllPreferences, setChromeStorage } from 'common/preferences';
 
 async function populatePreferences(): Promise<void> {
@@ -36,4 +37,18 @@ function createCheckbox(index: number, checked: boolean): HTMLElement {
     return container;
 }
 
+async function displayStatus(): Promise<void> {
+    const status = await getActivationStatus();
+    const statusElement = document.getElementById('activation-info');
+    statusElement.innerHTML = '';
+    statusElement.appendChild(
+        document.createTextNode(
+            status.activated
+                ? `Cookie Notice Handled (${status.provider})`
+                : 'No cookie notices found.'
+        )
+    );
+}
+
+displayStatus();
 populatePreferences();

@@ -7,8 +7,8 @@ import {
 import { delay } from './util';
 import { flagSite, isFlaggedSite } from './blocklist';
 import { getHostname } from 'common/preferences';
-import { getLogger } from 'common/logging';
 import { incrementCookieStats, notifyNoticeHandledOnPage } from 'common/stats';
+import { logProviderUsage } from 'common/logging';
 import providers, { IProvider } from './providers';
 
 let didSucceed = false;
@@ -131,22 +131,6 @@ async function checkPendingFlag(): Promise<void> {
         window.localStorage.removeItem(pendingFlag);
         await flagSite(pending);
     }
-}
-
-async function logProviderUsage(provider: IProvider): Promise<void> {
-    (await getLogger()).logCounter({
-        path: 'magpie_provider_match',
-        attributes: [
-            {
-                key: 'provider_name',
-                value: provider.name,
-            },
-            {
-                key: 'hostname',
-                value: window.location.hostname,
-            },
-        ],
-    });
 }
 
 checkAll();
