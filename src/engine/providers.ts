@@ -1,5 +1,8 @@
 import { CivicCookieControl } from './providers/CivicCookieControl';
+import { ConsentManager } from './providers/ConsentManager';
+import { CookieBot } from './providers/CookieBot';
 import { CookieCategoryType } from 'engine/categories';
+import { DidomiProvider } from './providers/Didomi';
 import { Evidon } from './providers/Evidon';
 import { HubSpot } from './providers/HubSpot';
 import { MaybePromise } from './util';
@@ -38,11 +41,20 @@ const cookieNames = {
     [CookieCategoryType.Marketing]: [
         'marketing',
         'targeting',
-        'functional',
+        'function',
         'advertising',
+        'personalization',
+        'personalize',
+        'ads',
+        'geolocation',
+    ],
+    [CookieCategoryType.Analytics]: [
+        'analytic',
+        'measurement',
+        'statistics',
+        'research',
     ],
     [CookieCategoryType.Preferences]: ['preference', 'personalization'],
-    [CookieCategoryType.Analytics]: ['analytic'],
     [CookieCategoryType.Social]: ['social'],
     [CookieCategoryType.DoNotSell]: ['do not sell'],
     [CookieCategoryType.Unknown]: ['other'],
@@ -69,9 +81,12 @@ export default [
     CivicCookieControl,
     OsanoProvider,
     SecurePrivacy,
-    HubSpot,
     Securiti,
     TrustArc,
     Evidon,
+    CookieBot,
+    ConsentManager,
     StackExchangeProvider,
+    DidomiProvider,
+    HubSpot, // this is by far the broadest provider. Keep it for last
 ];
