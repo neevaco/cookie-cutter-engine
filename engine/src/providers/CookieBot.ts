@@ -14,7 +14,7 @@ declare global {
     }
 }
 
-import { CookieCategoryType } from 'engine/categories';
+import { CookieCategoryType } from '../categories';
 import { IProvider } from '../providers';
 
 const consentChoices = {

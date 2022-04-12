@@ -7,32 +7,18 @@ const webpack = require('webpack');
 module.exports = {
     experiments: { asyncWebAssembly: true },
     entry: {
-        page: './src/engine/index.ts',
-        contentScript: './src/testExtension/contentScript/index.ts',
-        popup: './src/testExtension/popup/index.ts',
+        engine: './src/entry.ts',
     },
     mode: isDev ? 'development' : 'production',
     output: {
-        path: path.resolve(__dirname, './crx'),
+        path: path.resolve(__dirname, './dist'),
+        library: {
+            name: 'CookieEngine',
+            type: 'var',
+            export: 'CookieEngine',
+        },
     },
-
     plugins: [
-        new HtmlWebpackPlugin({
-            template: path.resolve(
-                __dirname,
-                './src/testExtension/popup/index.html'
-            ),
-            filename: 'popup.html',
-            chunks: ['popup'],
-        }),
-        new CopyWebpackPlugin({
-            patterns: [
-                {
-                    from: './src/testExtension/manifest.json',
-                    to: '.',
-                },
-            ],
-        }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(
                 isDev ? 'development' : 'production'
@@ -70,9 +56,5 @@ module.exports = {
     devtool: 'inline-cheap-source-map',
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
-        alias: {
-            common: path.resolve(__dirname, './src/common'),
-            engine: path.resolve(__dirname, './src/engine'),
-        },
     },
 };

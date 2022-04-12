@@ -9,9 +9,9 @@ declare global {
     }
 }
 
-import { CookieCategoryType } from 'engine/categories';
+import { CookieCategoryType } from '../categories';
 import { IProvider } from '../providers';
-import { delay } from 'engine/util';
+import { delay } from '../util';
 
 // one of our sadder implementations, but for now hubspot provides no
 // way to control these programatically.

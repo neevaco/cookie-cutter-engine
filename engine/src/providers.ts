@@ -1,5 +1,5 @@
 import { CivicCookieControl } from './providers/CivicCookieControl';
-import { CookieCategoryType } from 'engine/categories';
+import { CookieCategoryType } from './categories';
 import { Evidon } from './providers/Evidon';
 import { HubSpot } from './providers/HubSpot';
 import { MaybePromise } from './util';

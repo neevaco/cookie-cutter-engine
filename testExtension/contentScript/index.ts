@@ -1,6 +1,6 @@
 import { EventType, listen, send } from 'common/messaging';
 import { IActivationStatus } from '../popup/activationStatus';
-import { getAllPreferences } from 'common/preferences';
+import { getAllPreferences } from '../src/common/preferences';
 
 const scriptUrl = chrome.runtime.getURL('page.js');
 

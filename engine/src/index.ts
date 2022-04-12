@@ -1,24 +1,16 @@
-import { EventType, listen, send } from 'common/messaging';
 import {
     areAllEnabled,
+    flagSite,
+    getHostname,
+    incrementCookieStats,
     isCookieConsentingEnabled,
+    isFlaggedSite,
     isTypeEnabled,
-} from 'common/cookies';
+    logProviderUsage,
+    notifyNoticeHandledOnPage,
+} from './common';
 import { delay } from './util';
-import { flagSite, isFlaggedSite } from './blocklist';
-import { getHostname } from 'common/preferences';
-import { incrementCookieStats, notifyNoticeHandledOnPage } from 'common/stats';
-import { logProviderUsage } from 'common/logging';
 import providers, { IProvider } from './providers';
-
-let didSucceed = false;
-
-// only share status if we're the parent
-if (window === window.top) {
-    listen(EventType.RequestStatus, () => {
-        send(EventType.OnStatus, { success: didSucceed });
-    });
-}
 
 // do it recursively so async/nesting is nicer
 async function checkAll(attempts: number = 5): Promise<void> {
@@ -36,8 +28,10 @@ async function checkAll(attempts: number = 5): Promise<void> {
     }
 
     for (let i = 0; i < providers.length; i++) {
-        if ((didSucceed = await handleProvider(providers[i]))) {
-            notifyNoticeHandledOnPage(true);
+        if (await handleProvider(providers[i])) {
+            if (window === window.top) {
+                notifyNoticeHandledOnPage(true);
+            }
             return;
         }
     }
@@ -67,7 +61,7 @@ async function handleProvider(provider: IProvider): Promise<boolean> {
 
     // add to our activations and logs
     await incrementCookieStats();
-    logProviderUsage(provider);
+    logProviderUsage(provider.name);
 
     // check for reload loops
     tryFlagReloads();
@@ -133,4 +127,4 @@ async function checkPendingFlag(): Promise<void> {
     }
 }
 
-checkAll();
+export const cookieCut = checkAll;

@@ -20,7 +20,7 @@ declare global {
     }
 }
 
-import { CookieCategoryType } from 'engine/categories';
+import { CookieCategoryType } from '../categories';
 import { ICookieCategory, IProvider } from '../providers';
 
 // https://docs.osano.com/developer-documentation-consent-javascript-api#TheConsentObject

@@ -27,7 +27,7 @@ declare global {
     }
 }
 
-import { delay } from 'engine/util';
+import { delay } from '../util';
 // implement provider
 import { IProvider, matchStringType } from '../providers';
 

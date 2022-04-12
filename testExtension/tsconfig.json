@@ -8,8 +8,8 @@
     "allowJs": false,
     "noEmit": false,
     "paths": {
-      "common/*": ["common/*"],
-      "engine/*": ["engine/*"]
+      "engine/*": ["../../engine/src/*"],
+      "common/*": ["./src/common/*"],
     }
   },
   "include": [
