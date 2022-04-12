@@ -1,8 +1,7 @@
 import { CookieCategoryType } from 'engine/categories';
-import { CookieEngine } from 'engine/common';
+import { CookieEngine } from 'engine/entry';
 import { EventType, listen, send } from 'common/messaging';
-import { IActivationStatus } from 'testExtension/popup/activationStatus';
-import { IProvider } from 'engine/providers';
+import { IActivationStatus } from 'popup/activationStatus';
 import { getAllPreferences, getHostname } from 'common/preferences';
 
 // setup
@@ -32,9 +31,9 @@ const activationStatus: IActivationStatus = {
     activated: false,
 };
 
-CookieEngine.logProviderUsage(async (provider: IProvider) => {
+CookieEngine.logProviderUsage(async (provider: string) => {
     activationStatus.activated = true;
-    activationStatus.provider = provider.name;
+    activationStatus.provider = provider;
 });
 
 if (window === window.top) {

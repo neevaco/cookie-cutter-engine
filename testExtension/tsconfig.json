@@ -9,7 +9,6 @@
     "noEmit": false,
     "paths": {
       "engine/*": ["../../engine/src/*"],
-      "common/*": ["./src/common/*"],
     }
   },
   "include": [
