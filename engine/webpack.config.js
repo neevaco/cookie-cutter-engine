@@ -1,11 +1,9 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const CopyWebpackPlugin = require('copy-webpack-plugin');
 const isDev = process.env.NODE_ENV !== 'production';
 const webpack = require('webpack');
 
 module.exports = {
-    experiments: { asyncWebAssembly: true },
+    experiments: { asyncWebAssembly: true, outputModule: true },
     entry: {
         engine: './src/entry.ts',
     },
@@ -13,8 +11,7 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         library: {
-            name: 'CookieEngine',
-            type: 'var',
+            type: 'module',
             export: 'CookieEngine',
         },
     },
