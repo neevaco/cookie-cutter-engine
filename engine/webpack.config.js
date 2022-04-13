@@ -13,7 +13,6 @@ module.exports = {
         library: {
             name: 'CookieEngine',
             type: 'umd',
-            export: 'CookieEngine',
         },
     },
     plugins: [
