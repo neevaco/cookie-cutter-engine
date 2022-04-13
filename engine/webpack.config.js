@@ -3,7 +3,7 @@ const isDev = process.env.NODE_ENV !== 'production';
 const webpack = require('webpack');
 
 module.exports = {
-    experiments: { asyncWebAssembly: true, outputModule: true },
+    experiments: { asyncWebAssembly: true },
     entry: {
         engine: './src/entry.ts',
     },
@@ -11,7 +11,8 @@ module.exports = {
     output: {
         path: path.resolve(__dirname, './dist'),
         library: {
-            type: 'module',
+            name: 'CookieEngine',
+            type: 'umd',
             export: 'CookieEngine',
         },
     },
