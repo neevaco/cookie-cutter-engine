@@ -1,7 +1,7 @@
 {
     "name": "neeva-cookie-cutter-engine",
     "version": "0.0.1",
-    "main": "engine/dist/engine.mjs",
+    "main": "engine/dist/engine.js",
     "typings": "engine/dist/engine.d.ts",
     "scripts": {
         "build": "cd engine && webpack --mode=production --node-env=production && yarn typings",
