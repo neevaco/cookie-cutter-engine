@@ -1,5 +1,3 @@
-// This is the root eslint module for all JS modules at Neeva.
-// TODO(toddw): Convert all JS modules to extend this as the base.
 module.exports = {
     plugins: [],
     extends: ['./.eslintrc.base.json'],

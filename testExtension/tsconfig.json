@@ -1,0 +1,22 @@
+// Copyright 2022 Neeva Inc. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "allowSyntheticDefaultImports": true,
+    "noImplicitAny": true,
+    "module": "es6",
+    "target": "es2017",
+    "allowJs": false,
+    "noEmit": false,
+    "paths": {
+      "engine/*": ["../../engine/src/*"],
+    }
+  },
+  "include": [
+    "src/**/*.ts",  
+    "src/**/*.tsx",
+  ]
+}
