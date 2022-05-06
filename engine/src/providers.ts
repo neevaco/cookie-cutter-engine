@@ -16,6 +16,7 @@ import { SecurePrivacy } from './providers/SecurePrivacy';
 import { Securiti } from './providers/Securiti';
 import { StackExchangeProvider } from './providers/StackExchange';
 import { TrustArc } from './providers/TrustArc';
+import { Usercentrics } from './providers/Usercentrics';
 
 export interface IProvider {
     name: string;
@@ -92,5 +93,6 @@ export default [
     ConsentManager,
     StackExchangeProvider,
     DidomiProvider,
+    Usercentrics,
     HubSpot, // this is by far the broadest provider. Keep it for last
 ];
