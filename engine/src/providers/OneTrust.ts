@@ -21,6 +21,7 @@ declare global {
 
 import { IProvider, matchStringType } from '../providers';
 
+const BLUR_DELAY = 100;
 export const OneTrustProvider: IProvider = {
     name: 'OneTrust',
     isInUse: () => !!window.OneTrust?.AllowAll,
@@ -55,5 +56,11 @@ export const OneTrustProvider: IProvider = {
         const el = document.createElement('style');
         el.innerHTML = style;
         document.head.appendChild(el);
+
+        // also, strangely, another thing onetrust often does is activate the accessibility feature on some sites
+        // these usually go away when another element is focused
+        setTimeout(() => {
+            (document.activeElement as HTMLElement)?.blur();
+        }, BLUR_DELAY);
     },
 };
