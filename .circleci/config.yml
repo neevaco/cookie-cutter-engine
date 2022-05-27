@@ -28,8 +28,8 @@ jobs:
             - run: yarn build
             - run:
                   command: |
-                      npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-                      yarn publish --non-interactive
+                      npm set //registry.npmjs.org/:_authToken=$NPM_KEY
+                      npm publish
 
 # Invoke jobs via workflows
 workflows:
