@@ -7,32 +7,18 @@ orbs:
     node: circleci/node@4.7
 
 jobs:
-    install:
-        resource_class: small
-        docker:
-            - image: cimg/node:16.15
-        steps:
-            - checkout
-            - run: yarn install
-    lint:
-        resource_class: small
-        docker:
-            - image: cimg/node:16.15
-        steps:
-            - checkout
-            - run: yarn lint
     build:
         resource_class: small
         docker:
             - image: cimg/node:16.15
         steps:
             - checkout
+            - run: yarn install
+            - run: yarn lint
             - run: yarn build
 
 # Invoke jobs via workflows
 workflows:
     build_engine:
         jobs:
-            - install
-            - lint
             - build
