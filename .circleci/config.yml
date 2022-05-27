@@ -14,11 +14,33 @@ jobs:
         steps:
             - checkout
             - run: yarn install
+            - run: yarn ensure-version
             - run: yarn lint
             - run: yarn build
+    publish:
+        resource_class: small
+        docker:
+            - image: cimg/node:16.15
+        steps:
+            - checkout
+            - run: yarn install
+            - run: yarn ensure-version
+            - run: yarn build
+            - command: |
+                  npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+                  npm publish
 
 # Invoke jobs via workflows
 workflows:
     build_engine:
         jobs:
-            - build
+            - build:
+                  filters:
+                      branches:
+                          ignore: main
+    publish_engine:
+        jobs:
+            - publish:
+                  filters:
+                      branches:
+                          only: main
