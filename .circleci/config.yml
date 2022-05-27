@@ -26,9 +26,10 @@ jobs:
             - run: yarn install
             - run: yarn ensure-version
             - run: yarn build
-            - command: |
-                  npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
-                  npm publish
+            - run:
+                  command: |
+                      npm set //registry.npmjs.org/:_authToken=$NPM_TOKEN
+                      npm publish
 
 # Invoke jobs via workflows
 workflows:
