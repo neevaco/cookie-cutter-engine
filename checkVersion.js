@@ -18,7 +18,7 @@ async function checkVersion() {
     // verify semver validity
     if (!semver.valid(localVersion)) {
         console.error(
-            `Local version ${localVersion} is not a valid semantic version. Run \`npm version ${nextRemoteVersion}\` in the project root to fix this.`
+            `Local version ${localVersion} is not a valid semantic version. Run \`yarn version --new-version ${nextRemoteVersion}\` in the project root to fix this.`
         );
         process.exit(1);
         return;
@@ -31,7 +31,7 @@ async function checkVersion() {
         );
     } else {
         console.error(
-            `Local version (${localVersion}) is the same as or older than published version (${remoteVersion}).\nRun \`npm version ${nextRemoteVersion}\` in the project root to fix this.`
+            `Local version (${localVersion}) is the same as or older than published version (${remoteVersion}).\nRun \`yarn version --new-version ${nextRemoteVersion}\` in the project root to fix this.`
         );
         process.exit(1);
     }
