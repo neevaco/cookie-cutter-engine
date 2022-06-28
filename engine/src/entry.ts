@@ -17,6 +17,13 @@ export class CookieEngine {
     /**
      * @internal
      */
+    public static _properties = {
+        verbose: false,
+    };
+
+    /**
+     * @internal
+     */
     public static _methods = {
         areAllEnabled(): Promise<boolean> {
             throw new Error('Undefined method areAllEnabled');
@@ -46,6 +53,10 @@ export class CookieEngine {
             throw new Error('Undefined method logProviderUsage');
         },
     };
+
+    public static useVerboseLogging(): void {
+        CookieEngine._properties.verbose = true;
+    }
 
     public static areAllEnabled(
         handler: typeof CookieEngine._methods.areAllEnabled

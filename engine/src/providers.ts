@@ -9,7 +9,7 @@ import { CookieCategoryType } from './categories';
 import { DidomiProvider } from './providers/Didomi';
 import { Evidon } from './providers/Evidon';
 import { HubSpot } from './providers/HubSpot';
-import { MaybePromise } from './util';
+import { MaybePromise, createLogger } from './util';
 import { OneTrustProvider } from './providers/OneTrust';
 import { OsanoProvider } from './providers/Osano';
 import { SecurePrivacy } from './providers/SecurePrivacy';
@@ -41,6 +41,8 @@ export interface ICookieCategory {
     platformIdentifier: any;
 }
 
+const logger = createLogger('providers.ts');
+
 const cookieNames = {
     [CookieCategoryType.Essential]: ['essential', 'necessary'],
     [CookieCategoryType.Marketing]: [
@@ -67,6 +69,7 @@ const cookieNames = {
 
 export function matchStringType(name?: string | null): CookieCategoryType {
     if (!name) {
+        logger.log('Returning unknown category. Category name was undefined');
         return CookieCategoryType.Unknown;
     }
 
@@ -75,9 +78,17 @@ export function matchStringType(name?: string | null): CookieCategoryType {
     for (let i = 0; i < numCategories; i++) {
         const typeNames = cookieNames[i as CookieCategoryType];
         if (typeNames.some((type) => lowerName.includes(type))) {
+            logger.log(
+                `Matched given string category '${name}' with CookieCategoryType.${CookieCategoryType[i]}`
+            );
+
             return i;
         }
     }
+
+    logger.log(
+        `Failed to match string category '${name}' to a CookieCategoryType`
+    );
     return CookieCategoryType.Unknown;
 }
 

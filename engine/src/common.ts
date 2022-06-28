@@ -53,3 +53,7 @@ export function logProviderUsage(
 ): ReturnType<typeof CookieEngine._methods.logProviderUsage> {
     return CookieEngine._methods.logProviderUsage(...params);
 }
+
+export function isVerbose(): boolean {
+    return CookieEngine._properties.verbose;
+}
