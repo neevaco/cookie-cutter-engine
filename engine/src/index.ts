@@ -13,8 +13,10 @@ import {
     logProviderUsage,
     notifyNoticeHandledOnPage,
 } from './common';
-import { delay } from './util';
+import { createLogger, delay } from './util';
 import providers, { IProvider } from './providers';
+
+const logger = createLogger('index.ts');
 
 // do it recursively so async/nesting is nicer
 async function checkAll(attempts: number = 5): Promise<void> {
@@ -23,17 +25,28 @@ async function checkAll(attempts: number = 5): Promise<void> {
 
     // only run if our preferences say we should
     if (!(await isCookieConsentingEnabled()) || (await isFlaggedSite())) {
+        logger.warn(
+            'Not running cookie cutter! Disabled by user or site flagged'
+        );
         return;
     }
 
     // we may have loaded faster than the cookie consent script, so try a few attempts
     if (attempts === 0) {
+        logger.log(
+            'Cookie cutter failed to find a cookie notice after 5 attempts. Giving up'
+        );
         return;
     }
 
+    logger.log('Checking for cookie notices!', `${attempts} attempt(s) left`);
     for (let i = 0; i < providers.length; i++) {
         if (await handleProvider(providers[i])) {
+            logger.log('Finished dismissing notice');
             if (window === window.top) {
+                logger.log(
+                    'Notifying that we handled a cookie notice in the main frame'
+                );
                 notifyNoticeHandledOnPage(true);
             }
             return;
@@ -59,10 +72,13 @@ async function flushProvider(provider: IProvider): Promise<void> {
 }
 
 async function handleProvider(provider: IProvider): Promise<boolean> {
+    logger.log('Checking for provider:', provider.name);
     if (!(await provider.isInUse())) {
+        logger.log(`Skipping ${provider.name}. Not detected on page`);
         return false;
     }
 
+    logger.log('Cookie notice found!');
     // add to our activations and logs
     await incrementCookieStats();
     logProviderUsage(provider.name);
@@ -72,9 +88,11 @@ async function handleProvider(provider: IProvider): Promise<boolean> {
 
     // initialize the provider if necessary
     await initProvider(provider);
+    logger.log('Initialized provider');
 
     // either we've accepted all cookies
     if (await areAllEnabled()) {
+        logger.log('All cookies enabled, calling acceptAll()');
         await provider.acceptAll();
         await flushProvider(provider);
         return true;
@@ -82,6 +100,7 @@ async function handleProvider(provider: IProvider): Promise<boolean> {
 
     // or we've rejected some (or all) cookies.
     // set up the provider by rejecting all to start.
+    logger.log('Mix of cookies or none enabled, calling rejectAll()');
     await provider.rejectAll();
 
     try {
@@ -91,11 +110,14 @@ async function handleProvider(provider: IProvider): Promise<boolean> {
             // check if consent is given. Either essential or our preferences include this category
             const consentGiven = await isTypeEnabled(providerCategory.type);
             // then set the consent for this category
+            logger.log(
+                `Setting consent to ${consentGiven} for category ${providerCategory.type}`
+            );
             await provider.setCategoryConsent(providerCategory, consentGiven);
         });
     } catch (e) {
         // not all providers support categories, and can throw errors because of version mismatches
-        console.error(e);
+        logger.error(e);
     }
 
     await flushProvider(provider);
@@ -126,6 +148,7 @@ function tryFlagReloads(): void {
 async function checkPendingFlag(): Promise<void> {
     const pending: string | null = window.localStorage.getItem(pendingFlag);
     if (pending) {
+        logger.log('Reload loop detected! Flagging site.');
         window.localStorage.removeItem(pendingFlag);
         await flagSite(pending);
     }

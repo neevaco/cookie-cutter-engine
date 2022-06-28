@@ -1,6 +1,6 @@
 {
     "name": "@neevaco/cookie-cutter-engine",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "main": "engine/dist/engine.js",
     "typings": "engine/dist/engine.d.ts",
     "scripts": {
