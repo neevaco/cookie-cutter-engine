@@ -19,6 +19,12 @@ export declare class CookieEngine {
     /**
      * @internal
      */
+    static _properties: {
+        verbose: boolean;
+    };
+    /**
+     * @internal
+     */
     static _methods: {
         areAllEnabled(): Promise<boolean>;
         isCookieConsentingEnabled(): Promise<boolean>;
@@ -30,6 +36,7 @@ export declare class CookieEngine {
         notifyNoticeHandledOnPage(dismissed: boolean): void;
         logProviderUsage(providerName: string): Promise<void>;
     };
+    static useVerboseLogging(): void;
     static areAllEnabled(handler: typeof CookieEngine._methods.areAllEnabled): void;
     static isCookieConsentingEnabled(handler: typeof CookieEngine._methods.isCookieConsentingEnabled): void;
     static isTypeEnabled(handler: typeof CookieEngine._methods.isTypeEnabled): void;
